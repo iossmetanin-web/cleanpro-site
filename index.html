@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CleanPro — Экологичная клининговая компания</title>
+    <meta name="description" content="Профессиональная уборка с использованием экологичных средств">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #2E4036; --accent: #CC5833; --background: #F2F0E9; --dark: #1A1A1A; --muted: #5C5C5C; --white: #F2F0E9; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Manrope', sans-serif; background: var(--background); color: var(--dark); line-height: 1.6; }
+        
+        .navbar { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 1000; padding: 12px 24px; border-radius: 50px; display: flex; align-items: center; gap: 32px; transition: all 0.5s; }
+        .navbar.scrolled { background: rgba(242, 240, 233, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(46, 64, 54, 0.1); }
+        .navbar.scrolled .logo, .navbar.scrolled .nav-link { color: var(--primary); }
+        .logo { font-weight: 700; font-size: 18px; color: var(--white); }
+        .nav-links { display: flex; gap: 24px; list-style: none; }
+        .nav-link { color: var(--white); text-decoration: none; font-size: 14px; transition: opacity 0.3s; }
+        .nav-link:hover { opacity: 0.7; }
+        .btn { padding: 12px 24px; border-radius: 50px; border: none; font-weight: 600; font-size: 14px; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { transform: scale(1.03); }
+        .btn-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.3); }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.6); }
+        
+        .hero { min-height: 100vh; display: flex; align-items: flex-end; padding: 100px 24px; background: linear-gradient(to top, var(--primary) 0%, transparent 50%), url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1920&q=80') center/cover; }
+        .hero-content { max-width: 800px; }
+        .hero-label { color: rgba(255,255,255,0.7); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
+        .hero-title { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 16px; color: var(--white); }
+        .hero-title .accent { display: block; font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent); font-size: clamp(3rem, 10vw, 5rem); }
+        .hero-description { color: rgba(255,255,255,0.8); font-size: 1.1rem; max-width: 600px; margin-bottom: 32px; }
+        
+        .section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+        .section-label { color: var(--accent); font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; text-align: center; }
+        .section-title { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: 700; color: var(--primary); text-align: center; margin-bottom: 64px; }
+        
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .feature-card { background: var(--background); border: 1px solid rgba(46, 64, 54, 0.1); border-radius: 2rem; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .feature-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .feature-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(46, 64, 54, 0.1); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+        .feature-title { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .feature-description { color: var(--muted); font-size: 14px; }
+        .feature-items { margin-top: 20px; }
+        .feature-item { padding: 12px 16px; background: rgba(204, 88, 51, 0.1); border-radius: 12px; margin-bottom: 8px; font-size: 14px; color: var(--accent); font-weight: 500; }
+        
+        .philosophy { background: var(--primary); padding: 100px 24px; position: relative; overflow: hidden; }
+        .philosophy-bg { position: absolute; inset: 0; opacity: 0.2; background: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80') center/cover; }
+        .philosophy-content { position: relative; max-width: 900px; margin: 0 auto; text-align: center; }
+        .philosophy-text1 { color: rgba(255,255,255,0.6); font-size: 1.1rem; margin-bottom: 24px; }
+        .philosophy-text2 { font-size: clamp(1.5rem, 4vw, 2.5rem); line-height: 1.3; }
+        .philosophy-text2 .highlight { font-family: 'Playfair Display', serif; font-style: italic; color: var(--accent); }
+        .philosophy-text2 .white { color: var(--white); }
+        
+        .steps-grid { display: flex; flex-direction: column; gap: 24px; }
+        .step-card { background: var(--background); border: 1px solid rgba(46, 64, 54, 0.1); border-radius: 2rem; padding: 40px; display: flex; align-items: center; gap: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .step-number { width: 60px; height: 60px; border-radius: 16px; background: rgba(46, 64, 54, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: var(--primary); flex-shrink: 0; }
+        .step-content { flex: 1; }
+        .step-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .step-description { color: var(--muted); }
+        .step-icon { width: 50px; height: 50px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
+        
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+        .pricing-card { background: var(--background); border: 1px solid rgba(46, 64, 54, 0.1); border-radius: 2rem; padding: 32px; transition: transform 0.3s; }
+        .pricing-card:hover { transform: scale(1.02); }
+        .pricing-card.featured { background: var(--primary); color: var(--white); border-color: var(--accent); transform: scale(1.05); }
+        .pricing-card.featured:hover { transform: scale(1.07); }
+        .pricing-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+        .pricing-description { font-size: 14px; opacity: 0.7; margin-bottom: 16px; }
+        .pricing-price { font-size: 2rem; font-weight: 700; margin-bottom: 24px; }
+        .pricing-features { list-style: none; margin-bottom: 24px; }
+        .pricing-features li { padding: 8px 0; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .pricing-features li::before { content: '✓'; color: var(--accent); font-weight: 700; }
+        .pricing-card.featured .btn { background: var(--accent); color: white; }
+        .pricing-card:not(.featured) .btn { background: var(--primary); color: white; }
+        
+        .cta { padding: 100px 24px; }
+        .cta-box { max-width: 700px; margin: 0 auto; background: var(--primary); border-radius: 3rem; padding: 60px 40px; text-align: center; }
+        .cta-icon { width: 50px; height: 50px; margin: 0 auto 24px; color: var(--accent); }
+        .cta-title { font-size: 2rem; font-weight: 700; color: var(--white); margin-bottom: 16px; }
+        .cta-description { color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        
+        .footer { background: var(--dark); border-radius: 4rem 4rem 0 0; padding: 60px 24px 24px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
+        .footer-brand { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 12px; }
+        .footer-tagline { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 16px; }
+        .footer-status { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.6); font-size: 14px; font-family: monospace; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .footer-title { color: var(--white); font-weight: 600; margin-bottom: 16px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 8px; }
+        .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--white); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; max-width: 1200px; margin: 0 auto; }
+        .footer-copyright { color: rgba(255,255,255,0.4); font-size: 14px; }
+        .footer-legal { display: flex; gap: 24px; }
+        .footer-legal a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .footer-legal a:hover { color: rgba(255,255,255,0.6); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .step-card { flex-direction: column; text-align: center; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <span class="logo">CleanPro</span>
+        <ul class="nav-links">
+            <li><a href="#features" class="nav-link">Услуги</a></li>
+            <li><a href="#philosophy" class="nav-link">О нас</a></li>
+            <li><a href="#pricing" class="nav-link">Цены</a></li>
+        </ul>
+        <a href="#cta" class="btn btn-primary">Заказать уборку</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-label">Экологичный клининг</p>
+            <h1 class="hero-title">
+                Чистота — это
+                <span class="accent">забота.</span>
+            </h1>
+            <p class="hero-description">Профессиональная уборка с использованием экологичных средств. Безопасно для вас, ваших детей и домашних животных.</p>
+            <a href="#cta" class="btn btn-primary">Заказать уборку →</a>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <p class="section-label">Почему мы</p>
+        <h2 class="section-title">Три причины выбрать CleanPro</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">💧</div>
+                    <h3 class="feature-title">Экологичные средства</h3>
+                </div>
+                <p class="feature-description">Безопасные биоразлагаемые препараты без вреда для здоровья</p>
+                <div class="feature-items">
+                    <div class="feature-item">✓ Биоразлагаемые</div>
+                    <div class="feature-item">✓ Гипоаллергенные</div>
+                    <div class="feature-item">✓ Без химии</div>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Опытные специалисты</h3>
+                </div>
+                <p class="feature-description">Профессионалы с опытом от 5 лет и регулярной аттестацией</p>
+                <div class="feature-items">
+                    <div class="feature-item">✓ Проверка сотрудников</div>
+                    <div class="feature-item">✓ Страхование</div>
+                    <div class="feature-item">✓ Регулярное обучение</div>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-header">
+                    <div class="feature-icon">✅</div>
+                    <h3 class="feature-title">Гарантия качества</h3>
+                </div>
+                <p class="feature-description">Бесплатная повторная уборка при любом недочёте</p>
+                <div class="feature-items">
+                    <div class="feature-item">✓ Бесплатный повтор</div>
+                    <div class="feature-item">✓ Контроль качества</div>
+                    <div class="feature-item">✓ Поддержка 24/7</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="philosophy" id="philosophy">
+        <div class="philosophy-bg"></div>
+        <div class="philosophy-content">
+            <p class="philosophy-text1">Большинство клининговых компаний фокусируются на: быстрой уборке и дешёвых химикатах.</p>
+            <p class="philosophy-text2">
+                <span class="white">Мы фокусируемся на: </span>
+                <span class="highlight">вашем здоровье и экологичности.</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="steps">
+        <p class="section-label">Как мы работаем</p>
+        <h2 class="section-title">Простой процесс</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3 class="step-title">Заявка</h3>
+                    <p class="step-description">Оставьте заявку на сайте или позвоните нам. Мы уточним детали и рассчитаем стоимость.</p>
+                </div>
+                <div class="step-icon">📞</div>
+            </div>
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3 class="step-title">План уборки</h3>
+                    <p class="step-description">Подберём оптимальный набор услуг и составим индивидуальный план уборки.</p>
+                </div>
+                <div class="step-icon">⭐</div>
+            </div>
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3 class="step-title">Результат</h3>
+                    <p class="step-description">Проведём уборку в удобное время. Вы получаете чистоту и гарантию качества.</p>
+                </div>
+                <div class="step-icon">✓</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="pricing">
+        <p class="section-label">Стоимость</p>
+        <h2 class="section-title">Прозрачные цены</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 class="pricing-name">Базовый</h3>
+                <p class="pricing-description">Поддерживающая уборка</p>
+                <p class="pricing-price">от 2 500 ₽</p>
+                <ul class="pricing-features">
+                    <li>1-комнатная квартира</li>
+                    <li>Сухая и влажная уборка</li>
+                    <li>Уборка санузла</li>
+                    <li>Мытьё зеркал</li>
+                </ul>
+                <a href="#cta" class="btn" style="width:100%;justify-content:center;">Заказать</a>
+            </div>
+            <div class="pricing-card featured">
+                <h3 class="pricing-name">Профессиональный</h3>
+                <p class="pricing-description">Генеральная уборка</p>
+                <p class="pricing-price">от 4 500 ₽</p>
+                <ul class="pricing-features">
+                    <li>До 3-х комнат</li>
+                    <li>Всё из базового +</li>
+                    <li>Мытьё окон изнутри</li>
+                    <li>Уборка балкона</li>
+                </ul>
+                <a href="#cta" class="btn" style="width:100%;justify-content:center;">Заказать</a>
+            </div>
+            <div class="pricing-card">
+                <h3 class="pricing-name">Корпоративный</h3>
+                <p class="pricing-description">Для бизнеса</p>
+                <p class="pricing-price">Договорная</p>
+                <ul class="pricing-features">
+                    <li>Офисы и помещения</li>
+                    <li>График по договорённости</li>
+                    <li>Специальные условия</li>
+                    <li>Постоянный менеджер</li>
+                </ul>
+                <a href="#cta" class="btn" style="width:100%;justify-content:center;">Заказать</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="cta">
+        <div class="cta-box">
+            <div class="cta-icon">⭐</div>
+            <h2 class="cta-title">Готовы к чистоте?</h2>
+            <p class="cta-description">Оставьте заявку и получите бесплатный расчёт стоимости уборки в течение 15 минут</p>
+            <div class="cta-buttons">
+                <a href="tel:+79991234567" class="btn btn-primary">📞 Позвонить</a>
+                <a href="https://wa.me/79991234567" class="btn btn-outline">Написать в WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h3 class="footer-brand">CleanPro</h3>
+                <p class="footer-tagline">Экологичная чистота для вашего пространства</p>
+                <div class="footer-status">
+                    <span class="status-dot"></span>
+                    <span>Система активна</span>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Услуги</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Поддерживающая уборка</a></li>
+                    <li><a href="#">Генеральная уборка</a></li>
+                    <li><a href="#">Уборка после ремонта</a></li>
+                    <li><a href="#">Химчистка мебели</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Компания</h4>
+                <ul class="footer-links">
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Отзывы</a></li>
+                    <li><a href="#">Карьера</a></li>
+                    <li><a href="#">Блог</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Контакты</h4>
+                <ul class="footer-links">
+                    <li><a href="tel:+79991234567">+7 (999) 123-45-67</a></li>
+                    <li><a href="mailto:info@cleanpro.ru">info@cleanpro.ru</a></li>
+                    <li>Москва, Россия</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">© 2026 CleanPro. Все права защищены.</p>
+            <div class="footer-legal">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Условия использования</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 100);
+        });
+    </script>
+</body>
+</html>
